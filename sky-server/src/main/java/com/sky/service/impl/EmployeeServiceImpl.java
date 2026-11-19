@@ -20,6 +20,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
@@ -106,6 +107,50 @@ public class EmployeeServiceImpl implements EmployeeService {
         long total = page.getTotal();
         List<Employee> records = page.getResult();
         return new PageResult(total, records);
+    }
+
+    /**
+     * 启用或禁用员工账号
+     * @param status
+     * @param id
+     */
+    @Override
+    public void startOrStop(@PathVariable Integer status, Long id) {
+//        Employee employee = new Employee();
+//        employee.setStatus(status);
+//        employee.setId(id);
+
+        Employee employee = Employee.builder().status(status)
+                .id(id)
+                .build();
+        employeeMapper.update(employee);
+
+    }
+
+    /**
+     * 根据id查询员工信息
+     * @param id
+     * @return
+     */
+    @Override
+    public Employee getById(Long id) {
+        Employee employee = employeeMapper.getById(id);
+        employee.setPassword("*******");
+        return employee;
+    }
+
+    /**
+     * 修改员工信息
+     * @param employeeDTO
+     */
+    @Override
+    public void update(EmployeeDTO employeeDTO) {
+        Employee employee = new Employee();
+        BeanUtils.copyProperties(employeeDTO, employee);
+        employee.setUpdateTime(java.time.LocalDateTime.now());
+        employee.setUpdateUser(BaseContext.getCurrentId());
+        employeeMapper.update(employee);
+
     }
 
 }
