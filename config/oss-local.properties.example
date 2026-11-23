@@ -1,0 +1,5 @@
+# Copy this file to config/oss-local.properties and fill in your OSS credentials.
+# You can also set these environment variables instead of using a local file.
+# The dev profile loads the local file from the project root or sky-server.
+ALIYUN_OSS_ACCESS_KEY_ID=
+ALIYUN_OSS_ACCESS_KEY_SECRET=

@@ -4,3 +4,6 @@
 *.class
 *Test.java
 **/test/
+
+# Local OSS credentials
+/config/oss-local.properties
