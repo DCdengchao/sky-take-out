@@ -135,7 +135,7 @@ public class EmployeeController {
      */
     @ApiOperation(value = "修改员工信息")
     @PutMapping
-    public Result update(@PathVariable EmployeeDTO employeeDTO) {
+    public Result update(@RequestBody EmployeeDTO employeeDTO) {
         log.info("修改员工信息：{}", employeeDTO);
         employeeService.update(employeeDTO);
         return Result.success();
