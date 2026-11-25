@@ -114,7 +114,7 @@ public class SetmealServiceImpl implements SetmealService {
         setmealMapper.deleteBatch(ids);
 
         //删除关系表中的数据
-        setmealDishMapper.deleteBatchBySetmealId(ids);
+        setmealDishMapper.deleteBatchBySetmealIds(ids);
     }
 
     /**
@@ -132,6 +132,10 @@ public class SetmealServiceImpl implements SetmealService {
         return setmealVO;
     }
 
+    /**
+     * 修改套餐，同时需要更新套餐和菜品的关联关系
+     * @param setmealDTO
+     */
     @Override
     public void updateWithDish(SetmealDTO setmealDTO) {
         Setmeal setmeal = new Setmeal();
@@ -143,7 +147,7 @@ public class SetmealServiceImpl implements SetmealService {
         //删除关系表中的数据
         List<Long> ids = new ArrayList<>();
         ids.add(setmeal.getId());
-        setmealDishMapper.deleteBatchBySetmealId(ids);
+        setmealDishMapper.deleteBatchBySetmealIds(ids);
 
         List<SetmealDish> setmealDishes = setmealDTO.getSetmealDishes();
         setmealDishes.forEach(setmealDish -> {
@@ -154,6 +158,11 @@ public class SetmealServiceImpl implements SetmealService {
         setmealDishMapper.insertBatch(setmealDishes);
     }
 
+    /**
+     * 修改套餐状态
+     * @param status
+     * @param id
+     */
     @Override
     public void setStatus(Integer status, Long id) {
         if(status == StatusConstant.ENABLE) {
