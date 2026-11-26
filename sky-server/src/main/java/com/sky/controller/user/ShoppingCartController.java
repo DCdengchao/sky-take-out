@@ -3,6 +3,7 @@ package com.sky.controller.user;
 
 import com.sky.dto.ShoppingCartDTO;
 import com.sky.entity.ShoppingCart;
+import com.sky.mapper.ShoppingCartMapper;
 import com.sky.result.Result;
 import com.sky.service.ShoppingCartService;
 import io.swagger.annotations.Api;
@@ -22,6 +23,8 @@ public class ShoppingCartController {
 
     @Autowired
     private ShoppingCartService shoppingCartService;
+    @Autowired
+    private ShoppingCartMapper shoppingCartMapper;
 
     /**
      * 添加购物车
@@ -55,6 +58,15 @@ public class ShoppingCartController {
     @ApiOperation("清空购物车")
     public Result clean() {
         shoppingCartService.cleanShoppingCart();
+        return Result.success();
+    }
+
+    @PostMapping("/sub")
+    @ApiOperation("删除购物车中的菜品或者套餐")
+    public Result subDishOrSetmeal(@RequestBody ShoppingCartDTO shoppingCartDTO) {
+        // 实现删除购物车中的菜品或者套餐的逻辑
+        log.info("删除购物车中的菜品或者套餐:{}", shoppingCartDTO);
+        shoppingCartService.subByMealId(shoppingCartDTO);
         return Result.success();
     }
 
